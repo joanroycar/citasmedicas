@@ -39,6 +39,14 @@ class SpecialtyController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required|min:3',
+        ],[
+            'name.required'=> 'El nombre de la especialidad es obligatorio',
+            'name.min'=> 'El nombre de la especialidad debe tener mas de 3 caracteres',
+
+        ]);
         $especialty= Specialty::create($request->all());
 
         return redirect('/especialidades');
