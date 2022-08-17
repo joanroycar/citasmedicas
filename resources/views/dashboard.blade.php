@@ -278,7 +278,7 @@
         </div>
       </div>
     </div>
-  </div>  
+</div>  
 @endsection
 {{-- <x-app-layout>
     <x-slot name="header">

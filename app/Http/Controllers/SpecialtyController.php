@@ -7,14 +7,18 @@ use Illuminate\Http\Request;
 
 class SpecialtyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+
+    {
+        $this->middleware('auth');
+        
+    }
     public function index()
     {
-        //
+        $specialties = Specialty::all();
+
+        return view('specialties.index',compact('specialties'));
     }
 
     /**
@@ -24,7 +28,7 @@ class SpecialtyController extends Controller
      */
     public function create()
     {
-        //
+        return view('specialties.create');
     }
 
     /**
@@ -35,7 +39,9 @@ class SpecialtyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $especialty= Specialty::create($request->all());
+
+        return redirect('/especialidades');
     }
 
     /**
