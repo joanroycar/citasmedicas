@@ -49,7 +49,9 @@ class SpecialtyController extends Controller
         ]);
         $especialty= Specialty::create($request->all());
 
-        return redirect('/especialidades');
+        $notification ='La Especialidad se ha creado correctamente';
+
+        return redirect('/especialidades')->with(compact('notification'));
     }
 
     /**
@@ -92,8 +94,9 @@ class SpecialtyController extends Controller
         ]);
 
         $especialidade->update($request->all());
+        $notification ='La Especialidad se ha actualizado correctamente';
 
-        return redirect('/especialidades');
+        return redirect('/especialidades')->with(compact('notification'));
     }
 
     /**
@@ -104,9 +107,11 @@ class SpecialtyController extends Controller
      */
     public function destroy(Specialty $especialidade)
     {
+        $deleteName =$especialidade->name;
         $especialidade->delete();
+        $notification ='La Especialidad '.$deleteName.' se ha eliminado correctamente';
 
-        return redirect('/especialidades');
+        return redirect('/especialidades')->with(compact('notification'));
 
 
     }
