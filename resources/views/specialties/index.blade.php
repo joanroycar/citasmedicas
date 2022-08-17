@@ -34,8 +34,16 @@
                     {{$especialidade->description}}
                 </td>
                 <td>
-                  <a href="" class="btn btn-sm btn-primary ">Editar</a>
-                  <a href="" class="btn btn-sm btn-danger ">Eliminar</a>
+                  
+                  <form action="{{url('/especialidades/'.$especialidade->id)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <a href="{{route('especialidades.edit',$especialidade)}}" class="btn btn-sm btn-primary ">Editar</a>
+
+                    <button type="submit" class="btn btn-sm btn-danger" href="{{route('especialidades.destroy',$especialidade)}}">Eliminar</button>
+
+                  </form>
+                  
 
                 </td>
                 

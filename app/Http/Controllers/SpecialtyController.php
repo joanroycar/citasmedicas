@@ -69,9 +69,9 @@ class SpecialtyController extends Controller
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */
-    public function edit(Specialty $specialty)
+    public function edit(Specialty $especialidade)
     {
-        //
+        return view('specialties.edit',compact('especialidade'));
     }
 
     /**
@@ -81,9 +81,19 @@ class SpecialtyController extends Controller
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Specialty $specialty)
+    public function update(Request $request, Specialty $especialidade)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3',
+        ],[
+            'name.required'=> 'El nombre de la especialidad es obligatorio',
+            'name.min'=> 'El nombre de la especialidad debe tener mas de 3 caracteres',
+
+        ]);
+
+        $especialidade->update($request->all());
+
+        return redirect('/especialidades');
     }
 
     /**
@@ -92,8 +102,12 @@ class SpecialtyController extends Controller
      * @param  \App\Models\Specialty  $specialty
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Specialty $specialty)
+    public function destroy(Specialty $especialidade)
     {
-        //
+        $especialidade->delete();
+
+        return redirect('/especialidades');
+
+
     }
 }
