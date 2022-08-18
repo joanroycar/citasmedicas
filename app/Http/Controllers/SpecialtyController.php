@@ -52,6 +52,7 @@ class SpecialtyController extends Controller
         $notification ='La Especialidad se ha creado correctamente';
 
         return redirect('/especialidades')->with(compact('notification'));
+    
     }
 
     /**

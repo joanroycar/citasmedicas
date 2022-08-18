@@ -8,17 +8,17 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="./examples/icons.html">
+      <a class="nav-link " href="/especialidades">
         <i class="ni ni-briefcase-24 text-blue"></i> Especialidades
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="./examples/maps.html">
+      <a class="nav-link " href="/medicos">
         <i class="fas fa-stethoscope text-info"></i> Medicos
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="./examples/profile.html">
+      <a class="nav-link " href="/pacientes">
         <i class="fas fa-bed text-warning"></i> Pacientes
       </a>
     </li>
