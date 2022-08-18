@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialtyController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +31,5 @@ Route::middleware([
 });
 
 Route::resource('especialidades',SpecialtyController::class)->names('especialidades');
+Route::resource('medicos',DoctorController::class)->names('medicos');
+Route::resource('pacientes',PatientController::class)->names('pacientes');
