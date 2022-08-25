@@ -14,7 +14,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $pacientes = User::patients()->get();
+        $pacientes = User::patients()->paginate(5);
         return view('patients.index',compact('pacientes'));
     }
 
@@ -37,7 +37,32 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3',
+            'email'=>'required|email',
+            'cedula'=>'required|digits:10',
+            'address'=>'nullable|min:6',
+            'phone'=>'required'
+        ],[
+            'name.required'=> 'El nombre del medico es obligatorio',
+            'name.min'=> 'El nombre del médico debe tener mas de 3 caracteres',
+            'email.required'=> 'El correo electronico es obligatorio',
+            'email.email'=> 'Ingresa la dirección de correo electronico valido',
+            'cedula.required'=> 'La cédula es obligatorio',
+            'cedula.digits'=> 'La cédula debe tener 10 digitos',
+            'address.min'=> 'La dirección debe tener mas de 6 caracteres',
+            'phone.required'=> 'El númento de teléfono es obligatorio',
+
+        ]);
+
+        $paciente= User::create($request->all()+[
+            'role'=>'paciente',
+            'password'=>($request->input('password'))
+        ]);
+        $notification ='El Paciente se ha creado correctamente';
+
+        return redirect('/pacientes')->with(compact('notification'));
+
     }
 
     /**
@@ -46,9 +71,9 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+
     }
 
     /**
@@ -57,9 +82,10 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $paciente)
     {
-        //
+        return view('patients.edit',compact('paciente'));
+
     }
 
     /**
@@ -69,9 +95,49 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,User $paciente)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3',
+            'email'=>'required|email',
+            'cedula'=>'required|digits:10',
+            'address'=>'nullable|min:6',
+            'phone'=>'required'
+        ],[
+            'name.required'=> 'El nombre del medico es obligatorio',
+            'name.min'=> 'El nombre del médico debe tener mas de 3 caracteres',
+            'email.required'=> 'El correo electronico es obligatorio',
+            'email.email'=> 'Ingresa la dirección de correo electronico valido',
+            'cedula.required'=> 'La cédula es obligatorio',
+            'cedula.digits'=> 'La cédula debe tener 10 digitos',
+            'address.min'=> 'La dirección debe tener mas de 6 caracteres',
+            'phone.required'=> 'El númento de teléfono es obligatorio',
+
+        ]);
+        $paciente->update($request->except(['password']));
+
+        $paciente->update([
+            
+            $paciente->name = $request->name,
+            $paciente->email = $request->email,
+            $paciente->cedula = $request->cedula,
+            $paciente->address = $request->address,
+            $paciente->phone = $request->phone,
+
+
+        ]);
+
+        if($request->password != ''){
+            $paciente->update([
+                $paciente->password = $request->password,
+            ]);
+        }
+
+
+        $notification ='La información del paciente se actualizado correctamente';
+
+        return redirect('/pacientes')->with(compact('notification'));
+    
     }
 
     /**
@@ -80,8 +146,15 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $paciente)
     {
-        //
+        $deleteName =$paciente->name;
+
+        $paciente->delete();
+    
+
+        $notification ='El paciente '.$deleteName.' se ha eliminado correctamente';
+
+        return redirect('/pacientes')->with(compact('notification'));
     }
 }

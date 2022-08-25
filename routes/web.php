@@ -30,6 +30,9 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::get('medicos/horario',[DoctorController::class,'horario']);
+Route::post('medicos/horariostore',[DoctorController::class,'horariostore']);
+
 Route::resource('especialidades',SpecialtyController::class)->names('especialidades');
 Route::resource('medicos',DoctorController::class)->names('medicos');
 Route::resource('pacientes',PatientController::class)->names('pacientes');

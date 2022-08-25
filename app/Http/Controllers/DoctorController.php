@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Horarios;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Livewire\WithPagination;
 
 class DoctorController extends Controller
 {
+    Use WithPagination;
     public function index()
     {
-        $medicos = User::doctors()->get();
+        
+        $medicos = User::doctors()->paginate(1);
+        // $medicos = User::paginate(5)->doc;
+
         return view('doctors.index',compact('medicos'));
     }
 
@@ -120,5 +126,45 @@ class DoctorController extends Controller
 
         return redirect('/medicos')->with(compact('notification'));
         
+    }
+
+    public function horario(){
+
+        $days =[
+            'Lunes','Martes','Miércoles','Jueves',
+            'Viernes','Sábado','Domingo'
+
+        ];
+        
+        return view('horarios.index',compact('days'));
+    }
+
+    public function horariostore(Request $request){
+        $active = $request->input('active')?:[];
+
+        $morning_start =$request->input('morning_start');
+        $morning_end =$request->input('morning_end');
+        $afternoon_start =$request->input('afternoon_start');
+        $afternoon_end =$request->input('afternoon_end');
+
+        for($i=0;$i<7; ++$i)
+        Horarios::updateOrCreate(
+            [
+                'day'=> $i,
+                'user_id'=>auth()->id()
+            ],
+            [
+                'active'=> in_array($i,$active),
+                'morning_start'=>$morning_start[$i],
+                'morning_end'=>$morning_end[$i],
+                'afternoon_start'=>$afternoon_start[$i],
+                'afternoon_end'=>$afternoon_end[$i]
+
+            ]
+
+        );
+
+        return back();
+
     }
 }

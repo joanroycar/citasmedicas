@@ -68,6 +68,11 @@
             </tbody>
           </table>
         </div>
+        <div class="card-body">
+
+          {{$medicos->links()}}
+
+        </div>
 </div>
      
 @endsection
