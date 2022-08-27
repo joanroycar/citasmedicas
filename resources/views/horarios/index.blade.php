@@ -39,13 +39,15 @@
               </tr>
             </thead>
             <tbody>
-                @foreach ($days as $key => $day)
+                @foreach ($horarios as $key => $horario)
 
                 <tr>
-                    <th>{{$day}}</th>
+                    <th>{{$days[$key]}}</th>
                     <td>
                         <label class="custom-toggle">
-                            <input type="checkbox" name="active[]" value="{{$key}}" checked>
+                            <input type="checkbox" name="active[]" value="{{$key}}" 
+                            @if($horario->active) checked
+                            @endif>
                             <span class="custom-toggle-slider rounded-circle"></span>
                           </label>
                     </td>
@@ -57,12 +59,20 @@
                                     @for($i=8;$i<=11;$i++)
 
 
-                                       <option value="{{$i}}:00">
+                                       <option value="{{$i}}:00" 
+                                       
+                                       @if($i.':00 AM' == $horario->morning_start) selected
+                                       @endif
+                                       >
+                                       
 
                                         {{$i}}:00 AM
 
                                        </option>
-                                       <option value="{{$i}}:30">
+                                       <option value="{{$i}}:30"
+                                       
+                                       @if($i.':30 AM' == $horario->morning_start) selected
+                                       @endif>
 
                                         {{$i}}:30 AM
 
@@ -78,12 +88,16 @@
                                     @for($i=8;$i<=11;$i++)
 
 
-                                       <option value="{{$i}}:00">
+                                       <option value="{{$i}}:00"
+                                       @if($i.':00 AM' == $horario->morning_end) selected
+                                       @endif>
 
                                         {{$i}}:00 AM
 
                                        </option>
-                                       <option value="{{$i}}:30">
+                                       <option value="{{$i}}:30" 
+                                       @if($i.':30 AM' == $horario->morning_end) selected
+                                       @endif>
 
                                         {{$i}}:30 AM
 
@@ -103,12 +117,16 @@
                                     @for($i=2;$i<=11;$i++)
 
 
-                                       <option value="{{$i+12}}:00">
+                                       <option value="{{$i+12}}:00" 
+                                       @if($i.':00 PM' == $horario->afternoon_start) selected
+                                       @endif>
 
                                         {{$i}}:00 PM
 
                                        </option>
-                                       <option value="{{$i+12}}:30">
+                                       <option value="{{$i+12}}:30"
+                                       @if($i.':30 PM' == $horario->afternoon_start) selected
+                                       @endif >
 
                                         {{$i}}:30 PM
 
@@ -124,12 +142,16 @@
                                     @for($i=2;$i<=11;$i++)
 
 
-                                       <option value="{{$i+12}}:00">
+                                       <option value="{{$i+12}}:00"
+                                       @if($i.':00 PM' == $horario->afternoon_end) selected
+                                       @endif>
 
                                         {{$i}}:00 PM
 
                                        </option>
-                                       <option value="{{$i+12}}:30">
+                                       <option value="{{$i+12}}:30"
+                                       @if($i.':30 PM' == $horario->afternoon_end) selected
+                                       @endif >
 
                                         {{$i}}:30 PM
 

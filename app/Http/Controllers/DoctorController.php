@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Horarios;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
 
@@ -130,13 +131,28 @@ class DoctorController extends Controller
 
     public function horario(){
 
+
+
         $days =[
             'Lunes','Martes','Miércoles','Jueves',
             'Viernes','Sábado','Domingo'
 
         ];
+
+        $horarios = Horarios::where('user_id',auth()->id())->get();
+
+        $horarios->map(function($horarios){
+
+            $horarios->morning_start = (new Carbon($horarios->morning_start))->format('g:i A');
+            $horarios->morning_end = (new Carbon($horarios->morning_end))->format('g:i A');
+            $horarios->afternoon_start = (new Carbon($horarios->afternoon_start))->format('g:i A');
+            $horarios->afternoon_end = (new Carbon($horarios->afternoon_end))->format('g:i A');
+
+        });
+
+        // dd($horarios->toArray());
         
-        return view('horarios.index',compact('days'));
+        return view('horarios.index',compact('days','horarios'));
     }
 
     public function horariostore(Request $request){
